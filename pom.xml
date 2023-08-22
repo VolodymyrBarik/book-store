@@ -82,6 +82,19 @@
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>${liquibase.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -146,6 +159,23 @@
                         <sourceDirectory>${project.basedir}/src/test/java</sourceDirectory>
                     </sourceDirectories>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <propertyFile>src/main/resources/liquibase.properties</propertyFile>
+                            <changeLogFile>src/main/resources/db/changelog/db.changelog-master.yaml</changeLogFile>
+                        </configuration>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
