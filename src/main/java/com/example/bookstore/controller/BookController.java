@@ -1,9 +1,10 @@
-package com.example.bookstore.repository.book;
+package com.example.bookstore.controller;
 
 import com.example.bookstore.dto.BookDto;
 import com.example.bookstore.dto.BookSearchParameters;
 import com.example.bookstore.dto.CreateBookRequestDto;
 import com.example.bookstore.service.BookService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,14 +35,14 @@ public class BookController {
     }
 
     @PostMapping
-    public BookDto create(@RequestBody CreateBookRequestDto requestDto) {
+    public BookDto create(@RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.save(requestDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
     public void update(@PathVariable Long id,
-                       @RequestBody CreateBookRequestDto dto) {
+                       @RequestBody @Valid CreateBookRequestDto dto) {
         bookService.update(id, dto);
     }
 

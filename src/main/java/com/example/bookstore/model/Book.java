@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +28,7 @@ public class Book {
     private String title;
     @Column(nullable = false)
     private String author;
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String isbn;
     @Column(nullable = false)
     private BigDecimal price;
