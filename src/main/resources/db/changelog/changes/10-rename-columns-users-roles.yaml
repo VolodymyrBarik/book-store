@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: rename-columns-users-roles-again.yaml
+      author: VolodymyrB
+      changes:
+        - renameColumn:
+            tableName: users_roles
+            oldColumnName: users_id
+            newColumnName: user_id
+            columnDataType: bigint

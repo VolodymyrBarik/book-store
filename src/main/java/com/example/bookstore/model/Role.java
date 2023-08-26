@@ -7,10 +7,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 
 @Entity
 @Getter
+@Table(name = "roles")
 public class Role {
     public enum RoleName {
         USER, ADMIN
@@ -23,5 +25,6 @@ public class Role {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
     private RoleName roleName;
-
 }
+
+//todo: Add the required DTOs and mapper

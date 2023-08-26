@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: remove-role-id-column-from-user
+      author: VolodymyrB
+      changes:
+        - dropColumn:
+            tableName: users
+            columnName: role_id
