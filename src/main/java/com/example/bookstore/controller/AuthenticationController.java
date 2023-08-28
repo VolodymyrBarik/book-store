@@ -3,7 +3,7 @@ package com.example.bookstore.controller;
 import com.example.bookstore.dto.UserRegistrationRequestDto;
 import com.example.bookstore.dto.UserResponseDto;
 import com.example.bookstore.exception.RegistrationException;
-import com.example.bookstore.service.UserService;
+import com.example.bookstore.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,15 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
-    private final UserService userService;
+    private final AuthenticationService authenticationService;
 
-    //    public UserLoginResponseDto login(UserLoginRequestDto request);
+    //    @PostMapping("/login")
+    //    public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto request) {
+    //        return authenticationService.login(request);
+    //    }
 
     @PostMapping("/register")
     public UserResponseDto register(@RequestBody @Valid UserRegistrationRequestDto requestDto)
             throws RegistrationException {
-        return userService.register(requestDto);
+        return authenticationService.register(requestDto);
     }
-
-
 }
