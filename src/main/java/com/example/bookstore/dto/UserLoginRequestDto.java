@@ -2,13 +2,14 @@ package com.example.bookstore.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 
 @Getter
 public class UserLoginRequestDto {
-    @NotBlank
+    @NotEmpty
     @Email
     private String email;
-    @NotBlank
+    @NotEmpty
     private String password;
 }
