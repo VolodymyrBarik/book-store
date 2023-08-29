@@ -41,12 +41,14 @@ public class BookController {
         return bookService.findById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Create a new book", description = "Create a new book")
     @PostMapping
     public BookDto create(@RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.save(requestDto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Update a book", description = "Updates a book by it's id")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
