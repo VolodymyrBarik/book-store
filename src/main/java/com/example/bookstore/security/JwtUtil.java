@@ -1,25 +1,27 @@
 package com.example.bookstore.security;
 
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.util.Date;
-import java.util.function.Function;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.util.Date;
+import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JwtUtil {
-    private final Long expiration;
     private final Key secret;
 
-    public JwtUtil(@Value("${jwt.secret}") String secret, @Value("${jwt.expiration}") String jwtLifespan) {
-        this.secret = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-        this.expiration = Long.parseLong(jwtLifespan);
+    @Value("3000000")
+    private Long expiration;
+
+    public JwtUtil(@Value("asghskdljfgslkdjfvbsdfvklasjhfgslkjvn")
+                   String string) {
+        this.secret = Keys.hmacShaKeyFor(string.getBytes(StandardCharsets.UTF_8));
     }
 
     public String generateToken(String email) {

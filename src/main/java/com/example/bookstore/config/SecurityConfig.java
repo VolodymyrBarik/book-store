@@ -1,8 +1,8 @@
 package com.example.bookstore.config;
 
-import com.example.bookstore.security.JwtAuthenticationFilter;
 import static org.springframework.security.config.Customizer.withDefaults;
 
+import com.example.bookstore.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,7 +44,8 @@ public class SecurityConfig {
                 .httpBasic(withDefaults())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class)
                 .userDetailsService(userDetailsService)
                 .build();
     }
