@@ -1,5 +1,6 @@
 package com.example.bookstore.dto;
 
+import com.example.bookstore.validation.FieldMatch;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@FieldMatch
 public class UserRegistrationRequestDto {
     @NotBlank
     private String email;
