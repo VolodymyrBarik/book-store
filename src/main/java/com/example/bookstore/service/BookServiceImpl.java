@@ -69,4 +69,11 @@ public class BookServiceImpl implements BookService {
                 .map(mapper::toDto)
                 .toList();
     }
+
+    @Override
+    public List<BookDto> getAllBooksByCategoryId(Long categoryId) {
+        return bookRepository.findAllByCategoryId(categoryId).stream()
+                .map(mapper::toDto)
+                .toList();
+    }
 }

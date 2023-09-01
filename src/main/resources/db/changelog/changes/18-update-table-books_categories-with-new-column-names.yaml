@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-table-books_categories-with-new-column-names
+      author: VolodymyrB
+      changes:
+        - renameColumn:
+            tableName: books_categories
+            oldColumnName: book_id
+            newColumnName: books_id
+            columnDataType: varchar(255)
+        - renameColumn:
+            tableName: books_categories
+            oldColumnName: category_id
+            newColumnName: categories_id
+            columnDataType: varchar(255)

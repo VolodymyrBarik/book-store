@@ -27,4 +27,17 @@ databaseChangeLog:
       file: db/changelog/changes/13-add-USER-to-role.yaml
   - include:
       file: db/changelog/changes/14-remove-role-id-column-from-user.yaml
-
+  - include:
+      file: db/changelog/changes/15-update-role-rename-role_name-to-name.yaml
+  - include:
+      file: db/changelog/changes/16-create-category-table.yaml
+  - include:
+      file: db/changelog/changes/17-create-table-books_categories.yaml
+  - include:
+      file: db/changelog/changes/18-update-table-books_categories-with-new-column-names.yaml
+  - include:
+      file: db/changelog/changes/19-update-table-books_categories-with-new-column-names.yaml
+  - include:
+      file: db/changelog/changes/20-update-table-books_categories-with-new-column-names.yaml
+  - include:
+      file: db/changelog/changes/21-update-table-categories-add-unique-constraint-to-name.yaml
