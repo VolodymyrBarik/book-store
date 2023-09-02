@@ -3,6 +3,7 @@ package com.example.bookstore.service;
 import com.example.bookstore.dto.CategoryRequestDto;
 import com.example.bookstore.dto.CategoryResponseDto;
 import com.example.bookstore.exception.EntityNotFoundException;
+import com.example.bookstore.exception.EntityNotUniqueException;
 import com.example.bookstore.mapper.CategoryMapper;
 import com.example.bookstore.model.Category;
 import com.example.bookstore.repository.CategoryRepository;
@@ -33,6 +34,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponseDto save(CategoryRequestDto categoryDto) {
+        List<String> catNamesFromDb = findAll(Pageable.unpaged()).stream()
+                .map(CategoryResponseDto::getName)
+                .toList();
+        if (catNamesFromDb.contains(categoryDto.getName())) {
+            throw new EntityNotUniqueException("Category name should be unique, category "
+                    + categoryDto.getName() + " already exist");
+        }
         Category category = mapper.toModel(categoryDto);
         Category catFromDb = categoryRepository.save(category);
         return mapper.toDto(catFromDb);
