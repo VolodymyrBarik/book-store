@@ -48,30 +48,30 @@ public class CategoryController {
 
     @Operation(summary = "Get category by id", description = "Returns category with id provided")
     @GetMapping("/{id}")
-    public CategoryResponseDto getById(@PathVariable @RequestParam Long id) {
+    public CategoryResponseDto getById(@PathVariable Long id) {
         return categoryService.getById(id);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Update a category", description = "Updates a category by it's id")
-    @PutMapping
-    public CategoryResponseDto update(@RequestParam Long id,
-                                      @RequestBody CategoryRequestDto categoryDto) {
+    @PutMapping("/{id}")
+    public CategoryResponseDto update(@PathVariable Long id,
+                                      @RequestBody @Valid CategoryRequestDto categoryDto) {
         return categoryService.update(id, categoryDto);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Delete a category", description = "Deletes a category by it's id")
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(Long id) {
+    public void delete(@PathVariable Long id) {
         categoryService.deleteById(id);
     }
 
     @Operation(summary = "Get all the books in a category",
             description = "Returns all the books in certain category")
     @GetMapping("/{id}/books")
-    public List<BookDto> getBooksByCategoryId(@PathVariable @RequestParam Long id) {
+    public List<BookDto> getBooksByCategoryId(@PathVariable Long id) {
         return bookService.getAllBooksByCategoryId(id);
     }
 }

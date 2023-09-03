@@ -1,8 +1,6 @@
 package com.example.bookstore.dto;
 
-import com.example.bookstore.model.Category;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;

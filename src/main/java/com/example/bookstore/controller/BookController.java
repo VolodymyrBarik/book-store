@@ -1,7 +1,6 @@
 package com.example.bookstore.controller;
 
 import com.example.bookstore.dto.BookDto;
-import com.example.bookstore.dto.BookDtoWithoutCategoryIds;
 import com.example.bookstore.dto.BookSearchParameters;
 import com.example.bookstore.dto.CreateBookRequestDto;
 import com.example.bookstore.service.BookService;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,7 +35,7 @@ public class BookController {
         return bookService.findAll(pageable);
     }
 
-    @Operation(summary = "Get book", description = "Returns a book by it's id")
+    @Operation(summary = "Get a book", description = "Returns a book by it's id")
     @GetMapping("/{id}")
     public BookDto getBookById(@PathVariable Long id) {
         return bookService.findById(id);
@@ -69,7 +67,7 @@ public class BookController {
 
     @Operation(summary = "Search a book", description = "Search a book by title and author")
     @GetMapping("/search")
-    public List<BookDto> search(BookSearchParameters searchParameters) {
-        return bookService.search(searchParameters);
+    public List<BookDto> search(BookSearchParameters searchParameters, Pageable pageable) {
+        return bookService.search(searchParameters, pageable);
     }
 }
