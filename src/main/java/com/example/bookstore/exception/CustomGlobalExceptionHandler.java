@@ -63,7 +63,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(EntityNotUniqueException.class)
-    public ResponseEntity<Object> handleEntityNotUniqueException(EntityNotUniqueException exception) {
+    public ResponseEntity<Object> handleEntityNotUniqueException(
+            EntityNotUniqueException exception) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.CONFLICT);

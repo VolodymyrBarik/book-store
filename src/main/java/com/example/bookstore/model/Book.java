@@ -10,7 +10,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,7 +40,7 @@ public class Book {
     private boolean isDeleted = false;
     @ManyToMany
     @JoinTable(name = "books_categories",
-    joinColumns = {@JoinColumn(name="book_id")},
-    inverseJoinColumns = {@JoinColumn(name="categories_id")})
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "categories_id")})
     private Set<Category> categories;
 }
