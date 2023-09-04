@@ -1,21 +1,19 @@
 databaseChangeLog:
   - changeSet:
-      id: create-category-table
+      id: create-table-shopping_carts
       author: VolodymyrB
       changes:
         - createTable:
-            tableName: categories
+            tableName: shopping_carts
             columns:
               - column:
                   name: id
                   type: bigint
-                  autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: roleName
-                  type: varchar(255)
+                  name: user_id
+                  type: bigint
                   constraints:
-                    unique: true
                     nullable: false
