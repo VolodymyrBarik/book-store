@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-table-cart_items
+      id: create-cart_items
       author: VolodymyrB
       changes:
         - createTable:
@@ -9,6 +9,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: bigint
+                  autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -27,9 +28,11 @@ databaseChangeLog:
                   type: int
                   constraints:
                     nullable: false
+                    checkConstraint: "quantity >= 0"
               - column:
                   name: is_deleted
                   type: boolean
                   defaultValueBoolean: false
                   constraints:
                     nullable: false
+
