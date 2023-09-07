@@ -47,9 +47,6 @@ public class User implements UserDetails {
     private Set<Role> roles;
     @Column(name = "is_deleted")
     private boolean isDeleted;
-    @OneToOne(mappedBy = "shoppingCart", fetch = FetchType.LAZY)
-    @Transient
-    private ShoppingCart shoppingCart;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

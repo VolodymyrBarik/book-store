@@ -56,7 +56,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setLastName(requestDto.getLastName());
         user.setShippingAddress(requestDto.getShippingAddress());
         User userFromDb = userRepository.save(user);
-        shoppingCartSupplier.createShoppingCart(user);
+        shoppingCartSupplier.createShoppingCart(userFromDb);
         return userMapper.toResponseDto(userFromDb);
     }
 }

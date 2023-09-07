@@ -1,13 +1,14 @@
 package com.example.bookstore.service;
 
 import com.example.bookstore.dto.ShoppingCartResponseDto;
-import com.example.bookstore.model.ShoppingCart;
 import com.example.bookstore.model.User;
 
 public interface ShoppingCartService {
 
-    public ShoppingCartResponseDto get(String username);
+    ShoppingCartResponseDto get(User user);
 
-//    public ShoppingCart createShoppingCart(User user);
+    ShoppingCartResponseDto update(User user, Long cartItemId, int quantity);
+
+    void deleteCartItemFromShoppingCart(User user, Long cartItemId);
 
 }
