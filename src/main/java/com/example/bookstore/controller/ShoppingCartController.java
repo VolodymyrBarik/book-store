@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,12 +26,11 @@ public class ShoppingCartController {
         return shoppingCartService.get(username);
     }
 
-    @PostMapping
-    public ShoppingCartResponseDto addBook(Long bookId, Authentication authentication) {
+    @PostMapping("/{bookId}")
+    public ShoppingCartResponseDto addBook(@PathVariable Long bookId, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         cartItemService.create(bookId, userDetails);
         return shoppingCartService.get(((UserDetails) authentication.getPrincipal()).getUsername());
-        //todo: update sc rep with query to receive it with cartItems
     }
 
     //    @PutMapping("/cart-items/{bookId}")

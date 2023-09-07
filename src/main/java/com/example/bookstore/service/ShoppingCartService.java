@@ -8,6 +8,6 @@ public interface ShoppingCartService {
 
     public ShoppingCartResponseDto get(String username);
 
-    public ShoppingCart createShoppingCart(User user);
+//    public ShoppingCart createShoppingCart(User user);
 
 }

@@ -1,4 +1,4 @@
-package com.example.bookstore.service;
+package com.example.bookstore.service.impls;
 
 import com.example.bookstore.exception.EntityNotFoundException;
 import com.example.bookstore.model.Book;
@@ -9,6 +9,7 @@ import com.example.bookstore.repository.CartItemRepository;
 import com.example.bookstore.repository.ShoppingCartRepository;
 import com.example.bookstore.repository.UserRepository;
 import com.example.bookstore.repository.book.BookRepository;
+import com.example.bookstore.service.CartItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;

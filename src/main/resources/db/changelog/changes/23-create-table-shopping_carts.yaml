@@ -18,5 +18,7 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
-
-
+        - addUniqueConstraint:
+            constraintName: unique_user_id
+            tableName: shopping_carts
+            columnNames: user_id

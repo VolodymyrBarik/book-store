@@ -6,13 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long> {
-    //
-    //@Query("SELECT sc FROM ShoppingCart sc JOIN FETCH CartItem. WHERE sc.user=:id")
-    @Query("SELECT sc FROM ShoppingCart sc JOIN FETCH CartItem ci"
-            + " WHERE ci.shoppingCart=: id AND ci.isDeleted=false")
-    Optional<ShoppingCart> findShoppingCartBuId(Long id);
-
-    @Query("SELECT sc FROM ShoppingCart sc LEFT JOIN FETCH sc.user u WHERE u.id=:id")
-    //@Query("SELECT sc FROM ShoppingCart sc LEFT JOIN FETCH sc.user u WHERE u.id=:id")
+    @Query("SELECT sc FROM ShoppingCart sc " +
+            "LEFT JOIN FETCH sc.cartItems ci " +
+            "LEFT JOIN FETCH ci.book WHERE sc.user.id=:id")
     Optional<ShoppingCart> findShoppingCartByUser_Id(Long id);
 }
