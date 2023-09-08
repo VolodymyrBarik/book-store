@@ -30,18 +30,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCartResponseDto update(User user, Long cartItemId, int quantity) {
         ShoppingCart shoppingCart = findOrCreateNewShoppingCart(user);
-        CartItem cartItem = cartItemRepository.
-                findByIdAndShoppingCartId(cartItemId, shoppingCart.getId()).get();
+        CartItem cartItem = cartItemRepository
+                .findByIdAndShoppingCartId(cartItemId, shoppingCart.getId()).get();
         cartItem.setQuantity(quantity);
         cartItemRepository.save(cartItem);
         return shoppingCartMapper.toDto(findOrCreateNewShoppingCart(user));
     }
 
-
     public void deleteCartItemFromShoppingCart(User user, Long cartItemId) {
         ShoppingCart shoppingCart = findOrCreateNewShoppingCart(user);
-        CartItem cartItemToBeDeleted = cartItemRepository.
-                findByIdAndShoppingCartId(cartItemId, shoppingCart.getId()).get();
+        CartItem cartItemToBeDeleted = cartItemRepository
+                .findByIdAndShoppingCartId(cartItemId, shoppingCart.getId()).get();
         cartItemRepository.delete(cartItemToBeDeleted);
     }
 

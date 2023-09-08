@@ -17,7 +17,8 @@ public interface ShoppingCartMapper {
     @Mapping(source = "cartItems", target = "cartItemsDto")
     ShoppingCartResponseDto toDto(ShoppingCart shoppingCart);
 
-    default Set<CartItemResponseDto> mapCartItemsSetToCartItemsResponseDtoSet(Set<CartItem> cartItems) {
+    default Set<CartItemResponseDto> mapCartItemsSetToCartItemsResponseDtoSet(
+            Set<CartItem> cartItems) {
         return cartItems.stream()
                 .map(this::mapCartItemToResponseDto)
                 .collect(Collectors.toSet());

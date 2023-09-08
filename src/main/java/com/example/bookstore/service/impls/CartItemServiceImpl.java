@@ -8,7 +8,6 @@ import com.example.bookstore.model.CartItem;
 import com.example.bookstore.model.ShoppingCart;
 import com.example.bookstore.model.User;
 import com.example.bookstore.repository.CartItemRepository;
-import com.example.bookstore.repository.UserRepository;
 import com.example.bookstore.repository.book.BookRepository;
 import com.example.bookstore.service.CartItemService;
 import com.example.bookstore.service.ShoppingCartService;
@@ -29,7 +28,8 @@ public class CartItemServiceImpl implements CartItemService {
             return searchIfCartItemExist(requestDto, user);
         }
         Book bookFromDb = bookRepository.findById(requestDto.getBookId()).orElseThrow(
-                () -> new EntityNotFoundException("Can't find book with id " + requestDto.getBookId()));
+                () -> new EntityNotFoundException("Can't find book with id "
+                        + requestDto.getBookId()));
         CartItem cartItem = searchIfCartItemExist(requestDto, user);
         cartItem.setBook(bookFromDb);
         ShoppingCart shoppingCart = new ShoppingCart();
@@ -42,7 +42,8 @@ public class CartItemServiceImpl implements CartItemService {
     private CartItem searchIfCartItemExist(CartItemRequestDto requestDto, User user) {
         ShoppingCartResponseDto shoppingCartResponseDto =
                 shoppingCartService.get(user);
-        Optional<CartItem> byShoppingCartIdAndBookId = cartItemRepository.findByShoppingCartIdAndBook_id(
+        Optional<CartItem> byShoppingCartIdAndBookId =
+                cartItemRepository.findByShoppingCartIdAndBook_id(
                 shoppingCartResponseDto.getId(), requestDto.getBookId());
         if (byShoppingCartIdAndBookId.isPresent()) {
             CartItem cartItem = byShoppingCartIdAndBookId.get();
