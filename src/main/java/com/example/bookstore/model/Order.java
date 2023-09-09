@@ -21,7 +21,6 @@ import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-
 @Entity
 @Getter
 @Setter
@@ -58,5 +57,5 @@ public class Order {
     private Set<OrderItem> orderItems;
 
     @Column(nullable = false)
-    boolean isDeleted = false;
+    private boolean isDeleted = false;
 }
