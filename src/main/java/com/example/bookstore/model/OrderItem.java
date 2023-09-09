@@ -6,6 +6,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -25,14 +26,21 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(nullable = false)
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
+
     @OneToOne(fetch = FetchType.LAZY)
-    @Column(nullable = false)
+    @JoinColumn(name = "book_id", nullable = false)
     private Book book;
+
     @Column(nullable = false)
     private int quantity;
+
     @Column(nullable = false)
     private BigDecimal price;
+
+    @Column(nullable = false)
+    boolean isDeleted = false;
 }
