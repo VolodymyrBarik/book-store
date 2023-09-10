@@ -2,7 +2,7 @@ package com.example.bookstore.service.impls;
 
 import com.example.bookstore.dto.BookDto;
 import com.example.bookstore.dto.BookSearchParameters;
-import com.example.bookstore.dto.CreateBookRequestDto;
+import com.example.bookstore.dto.request.CreateBookRequestDto;
 import com.example.bookstore.exception.EntityNotFoundException;
 import com.example.bookstore.mapper.BookMapper;
 import com.example.bookstore.model.Book;

@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +22,9 @@ import org.hibernate.annotations.Where;
 @Setter
 @SQLDelete(sql = "UPDATE order_items SET is_deleted=true WHERE id=?")
 @Where(clause = "is_deleted=false")
-@Table(name = "order_items")
+@Table(name = "order_items", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"order_id", "book_id"})
+})
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

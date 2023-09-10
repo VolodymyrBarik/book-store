@@ -1,7 +1,7 @@
 package com.example.bookstore.service;
 
-import com.example.bookstore.dto.CategoryRequestDto;
-import com.example.bookstore.dto.CategoryResponseDto;
+import com.example.bookstore.dto.request.CategoryRequestDto;
+import com.example.bookstore.dto.response.CategoryResponseDto;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 

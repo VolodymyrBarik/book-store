@@ -1,8 +1,8 @@
 package com.example.bookstore.controller;
 
 import com.example.bookstore.dto.CartItemQuantityDto;
-import com.example.bookstore.dto.CartItemRequestDto;
-import com.example.bookstore.dto.ShoppingCartResponseDto;
+import com.example.bookstore.dto.request.CartItemRequestDto;
+import com.example.bookstore.dto.response.ShoppingCartResponseDto;
 import com.example.bookstore.model.User;
 import com.example.bookstore.service.CartItemService;
 import com.example.bookstore.service.ShoppingCartService;

@@ -40,3 +40,7 @@ databaseChangeLog:
                   defaultValueBoolean: false
                   constraints:
                     nullable: false
+        - addUniqueConstraint:
+            constraintName: unique_order_book
+            tableName: order_items
+            columnNames: order_id, book_id

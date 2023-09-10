@@ -1,4 +1,4 @@
-package com.example.bookstore.dto;
+package com.example.bookstore.dto.response;
 
 import java.util.Set;
 import lombok.Getter;
