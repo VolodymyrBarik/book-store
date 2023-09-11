@@ -37,7 +37,7 @@ public class Order {
     private User user;
 
     public enum Status {
-        NEW, IN_WORK, WAITING_FOR_PAYMENT, SENT, DELIVERED, CLOSED, DELETED
+        NEW, ACCEPTED, WAITING_FOR_PAYMENT, SENT, DELIVERED, CLOSED, DELETED
     }
 
     @Column(nullable = false)

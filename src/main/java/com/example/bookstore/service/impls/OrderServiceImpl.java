@@ -2,6 +2,7 @@ package com.example.bookstore.service.impls;
 
 import com.example.bookstore.dto.OrderPlacedConfirmation;
 import com.example.bookstore.dto.request.OrderRequestDto;
+import com.example.bookstore.dto.request.OrderStatusRequestDto;
 import com.example.bookstore.dto.response.OrderResponseDto;
 import com.example.bookstore.exception.EntityNotFoundException;
 import com.example.bookstore.mapper.OrderMapper;
@@ -50,6 +51,18 @@ public class OrderServiceImpl implements OrderService {
         return allOrderByUserId.stream()
                 .map(orderMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateStatus(Long orderId, OrderStatusRequestDto statusRequestDto) {
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new EntityNotFoundException("Can't find order number # " + orderId));
+        try {
+            order.setStatus(Order.Status.valueOf(statusRequestDto.getStatus()));
+            orderRepository.save(order);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid status: " + statusRequestDto.getStatus());
+        }
     }
 
     private OrderItem parseCartItemIntoOrderItem(Order order, CartItem cartItem) {
