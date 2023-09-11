@@ -1,10 +1,14 @@
 package com.example.bookstore.service;
 
+import com.example.bookstore.dto.response.OrderItemResponseDto;
 import com.example.bookstore.model.OrderItem;
-import java.util.Set;
+import com.example.bookstore.model.User;
+import java.util.List;
 
 public interface OrderItemService {
     OrderItem save(OrderItem orderItem);
 
-    Set<OrderItem> getOrderItemBy();
+    List<OrderItemResponseDto> getOrderItemByOrderId(Long orderId, User user);
+
+    OrderItemResponseDto getItemFromOrder(Long orderId, User user, Long orderItemId);
 }
