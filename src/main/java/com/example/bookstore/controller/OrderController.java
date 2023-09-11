@@ -47,7 +47,8 @@ public class OrderController {
 
     @GetMapping("/{orderId}/items/{orderItemId}")
     OrderItemResponseDto getItemFromOrder(
-            @PathVariable Long orderId, @PathVariable Long orderItemId, Authentication authentication) {
+            @PathVariable Long orderId, @PathVariable Long orderItemId,
+            Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return orderItemService.getItemFromOrder(orderId, user, orderItemId);
     }
