@@ -1,7 +1,7 @@
 package com.example.bookstore.service.impls;
 
-import com.example.bookstore.dto.CategoryRequestDto;
-import com.example.bookstore.dto.CategoryResponseDto;
+import com.example.bookstore.dto.request.CategoryRequestDto;
+import com.example.bookstore.dto.response.CategoryResponseDto;
 import com.example.bookstore.exception.EntityNotFoundException;
 import com.example.bookstore.exception.EntityNotUniqueException;
 import com.example.bookstore.mapper.CategoryMapper;

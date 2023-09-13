@@ -1,7 +1,7 @@
 package com.example.bookstore.service.impls;
 
-import com.example.bookstore.dto.CartItemRequestDto;
-import com.example.bookstore.dto.ShoppingCartResponseDto;
+import com.example.bookstore.dto.request.CartItemRequestDto;
+import com.example.bookstore.dto.response.ShoppingCartResponseDto;
 import com.example.bookstore.exception.EntityNotFoundException;
 import com.example.bookstore.model.Book;
 import com.example.bookstore.model.CartItem;
