@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-table-books_categories-with-new-column-names2
+      author: VolodymyrB
+      changes:
+        - modifyDataType:
+            tableName: books_categories
+            columnName: book_id
+            newDataType: bigint
+        - modifyDataType:
+            tableName: books_categories
+            columnName: categories_id
+            newDataType: bigint

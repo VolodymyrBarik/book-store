@@ -35,7 +35,7 @@ public class BookController {
         return bookService.findAll(pageable);
     }
 
-    @Operation(summary = "Get book", description = "Returns a book by it's id")
+    @Operation(summary = "Get a book", description = "Returns a book by it's id")
     @GetMapping("/{id}")
     public BookDto getBookById(@PathVariable Long id) {
         return bookService.findById(id);
@@ -67,7 +67,7 @@ public class BookController {
 
     @Operation(summary = "Search a book", description = "Search a book by title and author")
     @GetMapping("/search")
-    public List<BookDto> search(BookSearchParameters searchParameters) {
-        return bookService.search(searchParameters);
+    public List<BookDto> search(BookSearchParameters searchParameters, Pageable pageable) {
+        return bookService.search(searchParameters, pageable);
     }
 }
