@@ -1,6 +1,7 @@
-package com.example.bookstore.service;
+package com.example.bookstore.service.impls;
 
 import com.example.bookstore.repository.UserRepository;
+import com.example.bookstore.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

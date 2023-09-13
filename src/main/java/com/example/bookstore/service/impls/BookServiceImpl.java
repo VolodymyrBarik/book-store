@@ -1,4 +1,4 @@
-package com.example.bookstore.service;
+package com.example.bookstore.service.impls;
 
 import com.example.bookstore.dto.BookDto;
 import com.example.bookstore.dto.BookSearchParameters;
@@ -10,6 +10,7 @@ import com.example.bookstore.model.Category;
 import com.example.bookstore.repository.CategoryRepository;
 import com.example.bookstore.repository.book.BookRepository;
 import com.example.bookstore.repository.book.BookSpecificationBuilder;
+import com.example.bookstore.service.BookService;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

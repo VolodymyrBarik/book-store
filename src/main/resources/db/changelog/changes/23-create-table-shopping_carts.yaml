@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-shopping_carts
+      author: VolodymyrB
+      changes:
+        - createTable:
+            tableName: shopping_carts
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            constraintName: unique_user_id
+            tableName: shopping_carts
+            columnNames: user_id

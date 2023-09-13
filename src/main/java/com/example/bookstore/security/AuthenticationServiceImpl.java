@@ -10,6 +10,7 @@ import com.example.bookstore.model.Role;
 import com.example.bookstore.model.User;
 import com.example.bookstore.repository.UserRepository;
 import com.example.bookstore.service.RoleService;
+import com.example.bookstore.service.ShoppingCartSupplier;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final RoleService roleService;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
+    private final ShoppingCartSupplier shoppingCartSupplier;
 
     @Override
     public UserLoginResponseDto authenticate(UserLoginRequestDto request) {
@@ -54,6 +56,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setLastName(requestDto.getLastName());
         user.setShippingAddress(requestDto.getShippingAddress());
         User userFromDb = userRepository.save(user);
+        shoppingCartSupplier.createShoppingCart(userFromDb);
         return userMapper.toResponseDto(userFromDb);
     }
 }

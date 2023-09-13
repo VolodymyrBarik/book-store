@@ -41,3 +41,7 @@ databaseChangeLog:
       file: db/changelog/changes/20-update-table-books_categories-with-new-column-names.yaml
   - include:
       file: db/changelog/changes/21-update-table-categories-add-unique-constraint-to-name.yaml
+  - include:
+      file: db/changelog/changes/22-create-table-cart_items.yaml
+  - include:
+      file: db/changelog/changes/23-create-table-shopping_carts.yaml
