@@ -1,6 +1,6 @@
 package com.example.bookstore.service.impls;
 
-import com.example.bookstore.dto.ShoppingCartResponseDto;
+import com.example.bookstore.dto.response.ShoppingCartResponseDto;
 import com.example.bookstore.mapper.ShoppingCartMapper;
 import com.example.bookstore.model.CartItem;
 import com.example.bookstore.model.ShoppingCart;

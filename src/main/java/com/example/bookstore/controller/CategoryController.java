@@ -1,8 +1,8 @@
 package com.example.bookstore.controller;
 
 import com.example.bookstore.dto.BookDto;
-import com.example.bookstore.dto.CategoryRequestDto;
-import com.example.bookstore.dto.CategoryResponseDto;
+import com.example.bookstore.dto.request.CategoryRequestDto;
+import com.example.bookstore.dto.response.CategoryResponseDto;
 import com.example.bookstore.service.BookService;
 import com.example.bookstore.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;

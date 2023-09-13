@@ -3,7 +3,7 @@ package com.example.bookstore.mapper;
 import com.example.bookstore.config.MapperConfig;
 import com.example.bookstore.dto.BookDto;
 import com.example.bookstore.dto.BookDtoWithoutCategoryIds;
-import com.example.bookstore.dto.CreateBookRequestDto;
+import com.example.bookstore.dto.request.CreateBookRequestDto;
 import com.example.bookstore.exception.EntityNotFoundException;
 import com.example.bookstore.model.Book;
 import com.example.bookstore.model.Category;
