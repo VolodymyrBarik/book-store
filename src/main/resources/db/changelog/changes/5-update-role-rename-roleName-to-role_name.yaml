@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-role-rename-roleName-to-role_name.yaml
+      author: VolodymyrB
+      changes:
+        - renameColumn:
+            tableName: roles
+            oldColumnName: roleName
+            newColumnName: role_name
+            columnDataType: varchar(255)

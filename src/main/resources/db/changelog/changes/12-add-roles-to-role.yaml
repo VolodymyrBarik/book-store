@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 12-add-roles-to-role
+      author: VolodymyrB
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: role_name
+                  value: USER
+              - column:
+                  name: role_name
+                  value: ADMIN
+

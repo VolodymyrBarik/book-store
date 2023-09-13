@@ -3,4 +3,28 @@ databaseChangeLog:
       file: db/changelog/changes/1-create-book-table.yaml
   - include:
       file: db/changelog/changes/2-update-book-add-column-is_deleted.yaml
+  - include:
+      file: db/changelog/changes/3-create-user-table.yaml
+  - include:
+      file: db/changelog/changes/4-create-role-table.yaml
+  - include:
+      file: db/changelog/changes/5-update-role-rename-roleName-to-role_name.yaml
+  - include:
+      file: db/changelog/changes/6-update-user-add-column-email.yaml
+  - include:
+      file: db/changelog/changes/7-update-user-rename-columns.yaml
+  - include:
+      file: db/changelog/changes/8-create-table-users_roles.yaml
+  - include:
+      file: db/changelog/changes/9-rename-columns-users-roles.yaml
+  - include:
+      file: db/changelog/changes/10-rename-columns-users-roles.yaml
+  - include:
+      file: db/changelog/changes/11-update-user-add-column-is_deleted.yaml
+  - include:
+      file: db/changelog/changes/12-add-roles-to-role.yaml
+  - include:
+      file: db/changelog/changes/13-add-USER-to-role.yaml
+  - include:
+      file: db/changelog/changes/14-remove-role-id-column-from-user.yaml
 

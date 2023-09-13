@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-role-rename-role_name-to-name
+      author: VolodymyrB
+      changes:
+        - renameColumn:
+            tableName: roles
+            oldColumnName: role_name
+            newColumnName: name
+            columnDataType: varchar(255)
