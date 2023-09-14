@@ -1,11 +1,21 @@
 package com.example.bookstore.service.impls;
 
+import com.example.bookstore.dto.OrderPlacedConfirmation;
+import com.example.bookstore.dto.request.OrderRequestDto;
+import com.example.bookstore.dto.request.OrderStatusRequestDto;
+import com.example.bookstore.dto.response.OrderResponseDto;
 import com.example.bookstore.exception.EntityNotFoundException;
+import com.example.bookstore.mapper.OrderMapper;
 import com.example.bookstore.model.CartItem;
+import com.example.bookstore.model.Order;
+import com.example.bookstore.model.OrderItem;
 import com.example.bookstore.model.ShoppingCart;
 import com.example.bookstore.model.User;
 import com.example.bookstore.repository.CartItemRepository;
+import com.example.bookstore.repository.OrderItemRepository;
+import com.example.bookstore.repository.OrderRepository;
 import com.example.bookstore.repository.ShoppingCartRepository;
+import com.example.bookstore.service.OrderService;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;

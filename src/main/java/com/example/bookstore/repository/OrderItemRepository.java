@@ -1,5 +1,6 @@
 package com.example.bookstore.repository;
 
+import com.example.bookstore.model.OrderItem;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
