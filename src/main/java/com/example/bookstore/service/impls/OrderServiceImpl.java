@@ -1,10 +1,11 @@
 package com.example.bookstore.service.impls;
 
-import com.example.bookstore.dto.OrderPlacedConfirmation;
 import com.example.bookstore.dto.request.OrderRequestDto;
 import com.example.bookstore.dto.request.OrderStatusRequestDto;
+import com.example.bookstore.dto.response.OrderItemResponseDto;
 import com.example.bookstore.dto.response.OrderResponseDto;
 import com.example.bookstore.exception.EntityNotFoundException;
+import com.example.bookstore.mapper.OrderItemMapper;
 import com.example.bookstore.mapper.OrderMapper;
 import com.example.bookstore.model.CartItem;
 import com.example.bookstore.model.Order;
@@ -32,16 +33,17 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final CartItemRepository cartItemRepository;
+    private final OrderItemMapper orderItemMapper;
     private final OrderMapper orderMapper;
 
     @Override
-    public OrderPlacedConfirmation create(User user, OrderRequestDto dto) {
+    public OrderResponseDto create(User user, OrderRequestDto dto) {
         ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser_Id(user.getId())
                 .orElseThrow(() -> new EntityNotFoundException(
                         "You're shopping cart is empty, "
                                 + "you have to place good's into the shopping cart"));
-        Order orderFromDb = setUpAndSaveOrder(user, dto, shoppingCart);
-        deleteCartItemsCreateOrderItems(shoppingCart, orderFromDb);
+        Order orderFromDb = setUpOrder(user, dto, shoppingCart);
+        createOrderItems(shoppingCart, orderFromDb);
         return getOrderConfirmation(orderFromDb, user);
     }
 
@@ -84,28 +86,35 @@ public class OrderServiceImpl implements OrderService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private OrderPlacedConfirmation getOrderConfirmation(Order orderFromDb, User user) {
-        OrderPlacedConfirmation confirmation = new OrderPlacedConfirmation();
-        confirmation.setOrderId(orderFromDb.getId());
-        confirmation.setMessage("Thank you for ordering in our book store "
-                + user.getFirstName() + "!" + System.lineSeparator()
-                + " The number of your order is " + confirmation.getOrderId() + ", "
-                + System.lineSeparator()
-                + " We will contact you soon!");
-        return confirmation;
+    private OrderResponseDto getOrderConfirmation(Order orderFromDb, User user) {
+        OrderResponseDto responseDto = new OrderResponseDto();
+        responseDto.setId(orderFromDb.getId());
+        responseDto.setOrderDate(orderFromDb.getOrderDate());
+        Set<OrderItemResponseDto> orderItemsResponseDtoSet = orderFromDb.getOrderItems().stream()
+                .map(orderItemMapper::toResponseDto)
+                .collect(Collectors.toSet());
+        responseDto.setOrderItems(orderItemsResponseDtoSet);
+        responseDto.setUserId(orderFromDb.getUser().getId());
+        responseDto.setStatus(orderFromDb.getStatus().toString());
+        responseDto.setTotal(orderFromDb.getTotal());
+        return responseDto;
     }
 
-    private void deleteCartItemsCreateOrderItems(ShoppingCart shoppingCart, Order orderFromDb) {
+    private void createOrderItems(ShoppingCart shoppingCart, Order orderFromDb) {
         Set<CartItem> cartItems = shoppingCart.getCartItems();
         for (CartItem cartItem : cartItems) {
             OrderItem orderItem = parseCartItemIntoOrderItem(orderFromDb, cartItem);
             orderItemRepository.save(orderItem);
-            cartItem.setDeleted(true);
+            deleteCartItemFromShoppingCart(cartItem);
             cartItemRepository.save(cartItem);
         }
     }
 
-    private Order setUpAndSaveOrder(User user, OrderRequestDto dto, ShoppingCart shoppingCart) {
+    private void deleteCartItemFromShoppingCart(CartItem cartItem) {
+        cartItem.setDeleted(true);
+    }
+
+    private Order setUpOrder(User user, OrderRequestDto dto, ShoppingCart shoppingCart) {
         Order order = new Order();
         order.setStatus(Order.Status.NEW);
         order.setUser(user);
@@ -113,6 +122,10 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderDate(LocalDateTime.now());
         BigDecimal totalPrice = getTotalPrice(shoppingCart.getCartItems());
         order.setTotal(totalPrice);
+        return saveOrderToDb(order);
+    }
+
+    private Order saveOrderToDb(Order order) {
         return orderRepository.save(order);
     }
 }
