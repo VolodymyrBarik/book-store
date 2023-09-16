@@ -35,3 +35,4 @@ public class AuthenticationController {
         return authenticationService.register(requestDto);
     }
 }
+

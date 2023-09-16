@@ -1,6 +1,5 @@
 package com.example.bookstore.controller;
 
-import com.example.bookstore.dto.OrderPlacedConfirmation;
 import com.example.bookstore.dto.request.OrderRequestDto;
 import com.example.bookstore.dto.request.OrderStatusRequestDto;
 import com.example.bookstore.dto.response.OrderItemResponseDto;
@@ -35,7 +34,7 @@ public class OrderController {
 
     @PostMapping
     @Operation(summary = "Create a new order", description = "Create a new order")
-    OrderPlacedConfirmation create(
+    OrderResponseDto create(
             @RequestBody OrderRequestDto requestDto, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return orderService.create(user, requestDto);
