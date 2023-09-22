@@ -17,6 +17,7 @@ import com.example.bookstore.repository.CategoryRepository;
 import com.example.bookstore.repository.book.BookRepository;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +27,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 public class BookServiceImplTest {
@@ -67,12 +72,12 @@ public class BookServiceImplTest {
         bookId = 1L;
         bookDto.setId(bookId);
         bookDto.setCategoriesId(categoriesIdSet);
-        bookDto.setAuthor("Jorge Bob");
-        bookDto.setIsbn("36475849sdg");
-        bookDto.setPrice(new BigDecimal(1000));
-        bookDto.setTitle("Good book");
-        bookDto.setDescription("Good book's description");
-        bookDto.setCoverImage("src/image.jpg");
+        bookDto.setAuthor(book.getAuthor());
+        bookDto.setIsbn(book.getIsbn());
+        bookDto.setPrice(book.getPrice());
+        bookDto.setTitle(book.getTitle());
+        bookDto.setDescription(book.getDescription());
+        bookDto.setCoverImage(book.getCoverImage());
     }
 
     @Test
@@ -92,7 +97,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    @DisplayName("Verify findById method works")
+    @DisplayName("Verify findById method works, valid data")
     void findById_ValidId_ReturnsDto() {
 
         when(bookRepository.findByIdWithCategories(bookId)).thenReturn(Optional.of(book));
@@ -107,7 +112,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    @DisplayName("Verify findById method works, returns exception")
+    @DisplayName("Verify findById method works, invalid data, returns exception")
     void findById_ValidId_ReturnsException() {
         Long notExistingBookId = 123L;
 
@@ -119,5 +124,24 @@ public class BookServiceImplTest {
         assertThat(exception.getMessage()).isEqualTo("Can't find book by id " + notExistingBookId);
         verify(bookRepository, times(1)).findByIdWithCategories(notExistingBookId);
         verifyNoMoreInteractions(mapper);
+    }
+
+    @Test
+    @DisplayName("Verify method findAll() works properly")
+    public void findAll_ValidPageable_ReturnsAllProducts() {
+        Pageable pageable = PageRequest.of(0, 20);
+        List<Book> bookList = List.of(book);
+        Page<Book> bookPage = new PageImpl<>(bookList, pageable, bookList.size());
+
+        when(bookRepository.findAllWithCategories(pageable)).thenReturn(List.of(book));
+        when(mapper.toDto(book)).thenReturn(bookDto);
+
+        List<BookDto> allBookDtos = bookService.findAll(pageable);
+
+        assertThat(allBookDtos.size()).isEqualTo(1);
+        assertThat(allBookDtos.get(0)).isEqualTo(bookDto);
+
+        verify(bookRepository, times(1)).findAllWithCategories(pageable);
+        verifyNoMoreInteractions(bookRepository, mapper);
     }
 }
