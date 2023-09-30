@@ -1,21 +1,16 @@
 package com.example.bookstore.repository.book;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import com.example.bookstore.model.Book;
-import com.example.bookstore.model.Category;
-import com.example.bookstore.repository.CategoryRepository;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.jdbc.Sql;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -23,42 +18,37 @@ class BookRepositoryTest {
 
     @Autowired
     private BookRepository bookRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
-    private Category savedCategoryThriller;
-
-    @BeforeEach
-    void setUp() {
-        Book book = new Book();
-        book.setTitle("Test book 1");
-        book.setAuthor("test book author");
-        book.setDescription("interesting test book");
-        book.setIsbn("isbnunique");
-        book.setPrice(new BigDecimal(1000));
-        book.setCoverImage("images/testBookCover.jpg");
-        Category categoryThriller = new Category();
-        categoryThriller.setName("Thriller");
-        categoryThriller.setDescription("thriller books in this category");
-        savedCategoryThriller = categoryRepository.save(categoryThriller);
-        Category categoryHistorical = new Category();
-        categoryHistorical.setName("Historical");
-        categoryHistorical.setDescription("Historical cat is for historical books");
-        Category savedCategoryHistorical = categoryRepository.save(categoryHistorical);
-        Set<Category> categorySet = Set.of(savedCategoryThriller, savedCategoryHistorical);
-        book.setCategories(categorySet);
-        bookRepository.save(book);
-    }
 
     @Test
     @DisplayName("Checks findAllByCategoryId with valid data")
+    @Sql(scripts = {
+            "classpath:database/categories/add-categories-to-categories-table.sql",
+            "classpath:database/books/add-book-to-books-table.sql",
+            "classpath:database/books_categories/add-categories-to-book.sql"
+    }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {
+            "classpath:database/categories/delete-categories-from-categories-table.sql",
+            "classpath:database/books_categories/delete-all-from-books_categories.sql",
+            "classpath:database/books/delete-books-from-books-table.sql"
+    }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void findAllByCategoryId_ValidCatId_ReturnsListWithOneBook() {
         int expected = 1;
-        List<Book> actual = bookRepository.findAllByCategoryId(savedCategoryThriller.getId());
+        List<Book> actual = bookRepository.findAllByCategoryId(1L);
         assertThat(actual.size()).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("Checks findAllWithCategories with valid data")
+    @Sql(scripts = {
+            "classpath:database/categories/add-categories-to-categories-table.sql",
+            "classpath:database/books/add-book-to-books-table.sql",
+            "classpath:database/books_categories/add-categories-to-book.sql"
+    }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {
+            "classpath:database/categories/delete-categories-from-categories-table.sql",
+            "classpath:database/books_categories/delete-all-from-books_categories.sql",
+            "classpath:database/books/delete-books-from-books-table.sql"
+    }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void findAllWithCategories_Valid_ReturnsAllTheBooks() {
         int expected = 2;
         List<Book> allBooks = bookRepository.findAll();
@@ -68,6 +58,16 @@ class BookRepositoryTest {
 
     @Test
     @DisplayName("Checks findByIdWithCategories with valid data")
+    @Sql(scripts = {
+            "classpath:database/categories/add-categories-to-categories-table.sql",
+            "classpath:database/books/add-book-to-books-table.sql",
+            "classpath:database/books_categories/add-categories-to-book.sql"
+    }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {
+            "classpath:database/categories/delete-categories-from-categories-table.sql",
+            "classpath:database/books_categories/delete-all-from-books_categories.sql",
+            "classpath:database/books/delete-books-from-books-table.sql"
+    }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void findByIdWithCategories_ValidId_ReturnsBook() {
         long validId = 1;
         int expected = 2;
@@ -77,6 +77,16 @@ class BookRepositoryTest {
 
     @Test
     @DisplayName("Checks findByIdWithCategories with invalid data, exception should be returned")
+    @Sql(scripts = {
+            "classpath:database/categories/add-categories-to-categories-table.sql",
+            "classpath:database/books/add-book-to-books-table.sql",
+            "classpath:database/books_categories/add-categories-to-book.sql"
+    }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {
+            "classpath:database/categories/delete-categories-from-categories-table.sql",
+            "classpath:database/books_categories/delete-all-from-books_categories.sql",
+            "classpath:database/books/delete-books-from-books-table.sql"
+    }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void findByIdWithCategories_InvalidId_ReturnsException() {
         long invalidId = 999;
         RuntimeException exception = assertThrows(
