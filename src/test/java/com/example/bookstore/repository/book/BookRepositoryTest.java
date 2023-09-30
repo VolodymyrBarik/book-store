@@ -50,36 +50,38 @@ class BookRepositoryTest {
     }
 
     @Test
-    @DisplayName("Find all books by category id")
+    @DisplayName("Checks findAllByCategoryId with valid data")
     void findAllByCategoryId_ValidCatId_ReturnsListWithOneBook() {
+        int expected = 1;
         List<Book> actual = bookRepository.findAllByCategoryId(savedCategoryThriller.getId());
-        assertThat(actual.size()).isEqualTo(1);
+        assertThat(actual.size()).isEqualTo(expected);
     }
 
     @Test
-    @DisplayName("Find all the books")
+    @DisplayName("Checks findAllWithCategories with valid data")
     void findAllWithCategories_Valid_ReturnsAllTheBooks() {
+        int expected = 2;
         List<Book> allBooks = bookRepository.findAll();
-        Book book1 = allBooks.get(0);
-        assertThat(book1.getCategories().size()).isEqualTo(2);
+        Book actual = allBooks.get(0);
+        assertThat(actual.getCategories().size()).isEqualTo(expected);
     }
 
     @Test
-    @DisplayName("Finds a book with categories by id")
+    @DisplayName("Checks findByIdWithCategories with valid data")
     void findByIdWithCategories_ValidId_ReturnsBook() {
         long validId = 1;
-        Book book1 = bookRepository.findByIdWithCategories(validId).get();
-        assertThat(book1.getCategories().size()).isEqualTo(2);
+        int expected = 2;
+        Book actual = bookRepository.findByIdWithCategories(validId).get();
+        assertThat(actual.getCategories().size()).isEqualTo(expected);
     }
 
     @Test
-    @DisplayName("Finds a book with categories by id")
+    @DisplayName("Checks findByIdWithCategories with invalid data, exception should be returned")
     void findByIdWithCategories_InvalidId_ReturnsException() {
         long invalidId = 999;
-
         RuntimeException exception = assertThrows(
-                NoSuchElementException.class, () -> bookRepository.findByIdWithCategories(invalidId).get());
-
+                NoSuchElementException.class, () -> bookRepository
+                        .findByIdWithCategories(invalidId).get());
         assertThat(exception.getMessage()).isEqualTo("No value present");
     }
 }
