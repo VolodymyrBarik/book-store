@@ -1,9 +1,10 @@
-package com.example.bookstore.repository.book;
+package com.example.bookstore.repository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.example.bookstore.model.Book;
+import com.example.bookstore.repository.book.BookRepository;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;

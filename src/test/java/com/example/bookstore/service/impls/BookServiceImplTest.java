@@ -42,7 +42,7 @@ public class BookServiceImplTest {
     private CategoryRepository categoryRepository;
     private CreateBookRequestDto requestDto;
     private Book book;
-    private BookDto bookDto;
+    private BookDto expected;
     private Long bookId;
 
     @BeforeEach
@@ -66,16 +66,16 @@ public class BookServiceImplTest {
         book.setDescription("Good book's description");
         book.setCoverImage("src/image.jpg");
 
-        bookDto = new BookDto();
+        expected = new BookDto();
         bookId = 1L;
-        bookDto.setId(bookId);
-        bookDto.setCategoriesId(categoriesIdSet);
-        bookDto.setAuthor(book.getAuthor());
-        bookDto.setIsbn(book.getIsbn());
-        bookDto.setPrice(book.getPrice());
-        bookDto.setTitle(book.getTitle());
-        bookDto.setDescription(book.getDescription());
-        bookDto.setCoverImage(book.getCoverImage());
+        expected.setId(bookId);
+        expected.setCategoriesId(categoriesIdSet);
+        expected.setAuthor(book.getAuthor());
+        expected.setIsbn(book.getIsbn());
+        expected.setPrice(book.getPrice());
+        expected.setTitle(book.getTitle());
+        expected.setDescription(book.getDescription());
+        expected.setCoverImage(book.getCoverImage());
     }
 
     @Test
@@ -84,12 +84,12 @@ public class BookServiceImplTest {
 
         when(mapper.toModel(requestDto)).thenReturn(book);
         when(bookRepository.save(book)).thenReturn(book);
-        when(mapper.toDto(book)).thenReturn(bookDto);
+        when(mapper.toDto(book)).thenReturn(expected);
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(new Category()));
 
-        BookDto savedBookDto = bookService.save(requestDto);
+        BookDto actual = bookService.save(requestDto);
 
-        assertThat(savedBookDto).isEqualTo(bookDto);
+        assertThat(actual).isEqualTo(expected);
         verify(bookRepository, times(1)).save(book);
         verifyNoMoreInteractions(mapper, bookRepository, categoryRepository);
     }
@@ -99,12 +99,12 @@ public class BookServiceImplTest {
     void findById_ValidId_ReturnsDto() {
 
         when(bookRepository.findByIdWithCategories(bookId)).thenReturn(Optional.of(book));
-        when(mapper.toDto(book)).thenReturn(bookDto);
+        when(mapper.toDto(book)).thenReturn(expected);
 
         BookDto result = bookService.findById(bookId);
 
         assertThat(result).isNotNull();
-        assertThat(result).isEqualTo(bookDto);
+        assertThat(result).isEqualTo(expected);
         verify(bookRepository, times(1)).findByIdWithCategories(bookId);
         verifyNoMoreInteractions(bookRepository, mapper);
     }
@@ -130,12 +130,12 @@ public class BookServiceImplTest {
         Pageable pageable = PageRequest.of(0, 20);
 
         when(bookRepository.findAllWithCategories(pageable)).thenReturn(List.of(book));
-        when(mapper.toDto(book)).thenReturn(bookDto);
+        when(mapper.toDto(book)).thenReturn(expected);
 
         List<BookDto> allBookDtos = bookService.findAll(pageable);
 
         assertThat(allBookDtos.size()).isEqualTo(1);
-        assertThat(allBookDtos.get(0)).isEqualTo(bookDto);
+        assertThat(allBookDtos.get(0)).isEqualTo(expected);
 
         verify(bookRepository, times(1)).findAllWithCategories(pageable);
         verifyNoMoreInteractions(bookRepository, mapper);
