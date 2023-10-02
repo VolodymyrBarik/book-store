@@ -45,7 +45,7 @@ class BookControllerTest {
     }
 
     @Test
-    @DisplayName("Create a new book")
+    @DisplayName("Creates a new book")
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     @Sql(scripts = {
             "classpath:database/books/delete-books-from-books-table.sql"
@@ -86,7 +86,7 @@ class BookControllerTest {
     }
 
     @Test
-    @DisplayName("Checks if getAll() returns all the books")
+    @DisplayName("Checks getAll() returns all the books")
     @WithMockUser(username = "user")
     @Sql(scripts = {
             "classpath:database/books/add-five-books-to-books-table.sql"
@@ -94,7 +94,7 @@ class BookControllerTest {
     @Sql(scripts = {
             "classpath:database/books/delete-books-from-books-table.sql"
     }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    void getAll_ValidData_Success() throws Exception {
+    void getAll_ValidFiveBooks_Success() throws Exception {
 
         BookDto bookDto1 = new BookDto();
         bookDto1.setId(1L);
@@ -178,7 +178,7 @@ class BookControllerTest {
             "classpath:database/books/delete-books-from-books-table.sql"
     }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @WithMockUser(username = "user")
-    @DisplayName("Checks if getBookById() works")
+    @DisplayName("Checks if getBookById() returns expected book")
     void getBookById_ValidBookId_Success() throws Exception {
         BookDto expected = new BookDto();
         expected.setId(1L);
@@ -208,7 +208,7 @@ class BookControllerTest {
             "classpath:database/books/delete-books-from-books-table.sql"
     }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    @DisplayName("Checks if getBookById() works")
+    @DisplayName("Deletes a single book from database")
     void delete_ValidBookId_Success() throws Exception {
         Long idToBeDeleted = 1L;
 

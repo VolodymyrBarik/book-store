@@ -27,8 +27,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -113,7 +111,7 @@ public class BookServiceImplTest {
 
     @Test
     @DisplayName("Verify findById method works, invalid data, returns exception")
-    void findById_ValidId_ReturnsException() {
+    void findById_InvalidId_Exception() {
         Long notExistingBookId = 123L;
 
         when(bookRepository.findByIdWithCategories(notExistingBookId)).thenReturn(Optional.empty());
@@ -130,8 +128,6 @@ public class BookServiceImplTest {
     @DisplayName("Verify method findAll() works properly")
     public void findAll_ValidPageable_ReturnsAllProducts() {
         Pageable pageable = PageRequest.of(0, 20);
-        List<Book> bookList = List.of(book);
-        Page<Book> bookPage = new PageImpl<>(bookList, pageable, bookList.size());
 
         when(bookRepository.findAllWithCategories(pageable)).thenReturn(List.of(book));
         when(mapper.toDto(book)).thenReturn(bookDto);
