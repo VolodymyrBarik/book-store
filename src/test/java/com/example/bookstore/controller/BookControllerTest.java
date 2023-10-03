@@ -51,6 +51,7 @@ class BookControllerTest {
             "classpath:database/books/delete-books-from-books-table.sql"
     }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void create_ValidRequestDto_Success() throws Exception {
+        //given
         CreateBookRequestDto requestDto = new CreateBookRequestDto();
         requestDto.setTitle("Test book");
         requestDto.setAuthor("Test author");
@@ -71,7 +72,7 @@ class BookControllerTest {
         expected.setCategoriesId(requestDto.getCategoriesId());
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
-
+        //when
         MvcResult result = mockMvc.perform(
                         post("/books")
                                 .content(jsonRequest)
@@ -79,7 +80,7 @@ class BookControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andReturn();
-
+        //then
         BookDto actual = objectMapper.readValue(
                 result.getResponse().getContentAsString(), BookDto.class);
         EqualsBuilder.reflectionEquals(expected, actual, "id");
@@ -95,7 +96,7 @@ class BookControllerTest {
             "classpath:database/books/delete-books-from-books-table.sql"
     }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void getAll_ValidFiveBooks_Success() throws Exception {
-
+        //given
         BookDto bookDto1 = new BookDto();
         bookDto1.setId(1L);
         bookDto1.setTitle("testBook1");
@@ -147,12 +148,12 @@ class BookControllerTest {
         bookDto5.setPrice(new BigDecimal(1000));
         bookDto5.setCoverImage("coverImage5.jpg");
         expected.add(bookDto5);
-
+        //when
         MvcResult result = mockMvc.perform(get("/books")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
-
+        //then
         BookDto[] actual = objectMapper.readValue(result.getResponse()
                 .getContentAsByteArray(), BookDto[].class);
 
@@ -180,6 +181,7 @@ class BookControllerTest {
     @WithMockUser(username = "user")
     @DisplayName("Checks if getBookById() returns expected book")
     void getBookById_ValidBookId_Success() throws Exception {
+        //given
         BookDto expected = new BookDto();
         expected.setId(1L);
         expected.setAuthor("testAuthor");
@@ -188,12 +190,12 @@ class BookControllerTest {
         expected.setIsbn("isbnunique");
         expected.setPrice(new BigDecimal(1000));
         expected.setCoverImage("coverImage.jpg");
-
+        //when
         MvcResult result = mockMvc.perform(get("/books/{id}", expected.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
-
+        //then
         BookDto actual = objectMapper.readValue(
                 result.getResponse().getContentAsString(), BookDto.class);
 
@@ -210,8 +212,9 @@ class BookControllerTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     @DisplayName("Deletes a single book from database")
     void delete_ValidBookId_Success() throws Exception {
+        //given
         Long idToBeDeleted = 1L;
-
+        //when
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/books/{id}", idToBeDeleted)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -221,7 +224,7 @@ class BookControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
-
+        //then
         BookDto[] actual = objectMapper.readValue(result.getResponse()
                 .getContentAsByteArray(), BookDto[].class);
 

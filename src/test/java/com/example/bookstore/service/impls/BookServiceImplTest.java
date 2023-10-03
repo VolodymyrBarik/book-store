@@ -81,14 +81,14 @@ public class BookServiceImplTest {
     @Test
     @DisplayName("Verify save method works")
     void save_ValidCreateBookRequestDto_ReturnsBookDto() {
-
+        //given
         when(mapper.toModel(requestDto)).thenReturn(book);
         when(bookRepository.save(book)).thenReturn(book);
         when(mapper.toDto(book)).thenReturn(expected);
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(new Category()));
-
+        //when
         BookDto actual = bookService.save(requestDto);
-
+        //then
         assertThat(actual).isEqualTo(expected);
         verify(bookRepository, times(1)).save(book);
         verifyNoMoreInteractions(mapper, bookRepository, categoryRepository);
@@ -97,12 +97,12 @@ public class BookServiceImplTest {
     @Test
     @DisplayName("Verify findById method works, valid data")
     void findById_ValidId_ReturnsDto() {
-
+        //given
         when(bookRepository.findByIdWithCategories(bookId)).thenReturn(Optional.of(book));
         when(mapper.toDto(book)).thenReturn(expected);
-
+        //when
         BookDto result = bookService.findById(bookId);
-
+        //then
         assertThat(result).isNotNull();
         assertThat(result).isEqualTo(expected);
         verify(bookRepository, times(1)).findByIdWithCategories(bookId);
@@ -112,13 +112,14 @@ public class BookServiceImplTest {
     @Test
     @DisplayName("Verify findById method works, invalid data, returns exception")
     void findById_InvalidId_Exception() {
+        //given
         Long notExistingBookId = 123L;
 
         when(bookRepository.findByIdWithCategories(notExistingBookId)).thenReturn(Optional.empty());
-
+        //when
         RuntimeException exception = assertThrows(
                 EntityNotFoundException.class, () -> bookService.findById(notExistingBookId));
-
+        //then
         assertThat(exception.getMessage()).isEqualTo("Can't find book by id " + notExistingBookId);
         verify(bookRepository, times(1)).findByIdWithCategories(notExistingBookId);
         verifyNoMoreInteractions(mapper);
@@ -127,13 +128,14 @@ public class BookServiceImplTest {
     @Test
     @DisplayName("Verify method findAll() works properly")
     public void findAll_ValidPageable_ReturnsAllProducts() {
+        //given
         Pageable pageable = PageRequest.of(0, 20);
 
         when(bookRepository.findAllWithCategories(pageable)).thenReturn(List.of(book));
         when(mapper.toDto(book)).thenReturn(expected);
-
+        //when
         List<BookDto> allBookDtos = bookService.findAll(pageable);
-
+        //then
         assertThat(allBookDtos.size()).isEqualTo(1);
         assertThat(allBookDtos.get(0)).isEqualTo(expected);
 

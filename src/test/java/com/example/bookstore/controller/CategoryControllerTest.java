@@ -52,6 +52,7 @@ class CategoryControllerTest {
             "classpath:database/categories/delete-categories-from-categories-table.sql"
     }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void create_ValidRequestDto_Success() throws Exception {
+        //given
         CategoryRequestDto requestDto = new CategoryRequestDto();
         requestDto.setName("Test Category");
         requestDto.setDescription("Test Category made especially for tests");
@@ -62,7 +63,7 @@ class CategoryControllerTest {
         expected.setDescription(requestDto.getDescription());
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
-
+        //when
         MvcResult result = mockMvc.perform(
                         post("/categories")
                                 .content(jsonRequest)
@@ -70,7 +71,7 @@ class CategoryControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andReturn();
-
+        //then
         BookDto actual = objectMapper.readValue(
                 result.getResponse().getContentAsString(), BookDto.class);
         EqualsBuilder.reflectionEquals(expected, actual, "id");
@@ -86,6 +87,7 @@ class CategoryControllerTest {
             "classpath:database/books/delete-books-from-books-table.sql"
     }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void getAll_ValidTwoCategories_Success() throws Exception {
+        //given
         CategoryResponseDto dto1 = new CategoryResponseDto();
         dto1.setId(1L);
         dto1.setName("Thriller");
@@ -98,12 +100,12 @@ class CategoryControllerTest {
         dto2.setName("Historical");
         dto2.setDescription("historical books in this category");
         expected.add(dto2);
-
+        //when
         MvcResult result = mockMvc.perform(get("/categories")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
-
+        //then
         CategoryResponseDto[] actual = objectMapper.readValue(result.getResponse()
                 .getContentAsByteArray(), CategoryResponseDto[].class);
 
@@ -123,16 +125,17 @@ class CategoryControllerTest {
     @WithMockUser(username = "user")
     @DisplayName("Checks if getBookById() returns category expected")
     void getById_ValidCategoryId_Success() throws Exception {
+        //given
         CategoryResponseDto expected = new CategoryResponseDto();
         expected.setId(2L);
         expected.setName("Historical");
         expected.setDescription("historical books in this category");
-
+        //when
         MvcResult result = mockMvc.perform(get("/categories/{id}", expected.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
-
+        //then
         CategoryResponseDto actual = objectMapper.readValue(
                 result.getResponse().getContentAsString(), CategoryResponseDto.class);
 
@@ -149,8 +152,9 @@ class CategoryControllerTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     @DisplayName("Deletes a single book from database")
     void delete_ValidCategoryId_Success() throws Exception {
+        //given
         Long idToBeDeleted = 2L;
-
+        //when
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/categories/{id}", idToBeDeleted)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -160,7 +164,7 @@ class CategoryControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
-
+        //then
         CategoryResponseDto[] actual = objectMapper.readValue(result.getResponse()
                 .getContentAsByteArray(), CategoryResponseDto[].class);
 

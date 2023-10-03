@@ -12,7 +12,8 @@ import com.example.bookstore.dto.response.CategoryResponseDto;
 import com.example.bookstore.mapper.CategoryMapper;
 import com.example.bookstore.model.Category;
 import com.example.bookstore.repository.CategoryRepository;
-import java.util.List;
+import java.util.Collections;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,10 +58,9 @@ class CategoryServiceImplTest {
     @DisplayName("Verify save method works")
     void save_ValidRequestCategoryDto_Success() {
         //given
-        PageImpl<Category> categories = new PageImpl<>(List.of(new Category()));
+        PageImpl<Category> categories = new PageImpl<>(Collections.emptyList());
         when(categoryRepository.findAll(Pageable.unpaged()))
                 .thenReturn(categories);
-        when(categories.get().toList().contains(requestDto.getName())).thenReturn(false);
         when(mapper.toModel(requestDto)).thenReturn(category);
         when(categoryRepository.save(category)).thenReturn(category);
         when(mapper.toDto(any(Category.class))).thenReturn(expected);
@@ -73,19 +73,17 @@ class CategoryServiceImplTest {
     }
 
     @Test
-    void findAll() {
-    }
-
-    @Test
-    void getById() {
-
-    }
-
-    @Test
-    void update() {
-    }
-
-    @Test
-    void deleteById() {
+    @DisplayName("Verify getById() returns category required")
+    void getById_ValidId_Success() {
+        //given
+        when(categoryRepository.findById(category.getId()))
+                .thenReturn(Optional.ofNullable(category));
+        when(mapper.toDto(category)).thenReturn(expected);
+        //when
+        CategoryResponseDto actual = categoryService.getById(category.getId());
+        //then
+        assertThat(actual).isEqualTo(expected);
+        verify(categoryRepository, times(1)).findById(category.getId());
+        verifyNoMoreInteractions(mapper, categoryRepository);
     }
 }
