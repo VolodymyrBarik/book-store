@@ -29,7 +29,7 @@ class ShoppingCartRepositoryTest {
             "classpath:database/cartItem/delete-cartItems-from-cart_items-table.sql",
             "classpath:database/books/delete-books-from-books-table.sql"
     }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    void findShoppingCartByUser_Id() {
+    void findShoppingCartByUser_Id_ValidId_Success() {
         ShoppingCart actual = shoppingCartRepository.findShoppingCartByUser_Id(1L).get();
         assertThat(actual).isNotNull();
         assertThat(actual.getId()).isEqualTo(1L);
