@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "ShoppingCart management", description = "Endpoints to manage shopping cart")
 @RestController
-@RequestMapping("cart")
+@RequestMapping("/cart")
 @RequiredArgsConstructor
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
