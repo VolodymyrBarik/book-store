@@ -24,6 +24,7 @@ class BookRepositoryTest {
     @Test
     @DisplayName("Checks findAllByCategoryId with valid data")
     @Sql(scripts = {
+            "classpath:database/categories/delete-categories-from-categories-table.sql",
             "classpath:database/categories/add-categories-to-categories-table.sql",
             "classpath:database/books/add-book-to-books-table.sql",
             "classpath:database/books_categories/add-categories-to-book.sql"
@@ -42,6 +43,7 @@ class BookRepositoryTest {
     @Test
     @DisplayName("Checks findAllWithCategories with valid data")
     @Sql(scripts = {
+            "classpath:database/categories/delete-categories-from-categories-table.sql",
             "classpath:database/categories/add-categories-to-categories-table.sql",
             "classpath:database/books/add-book-to-books-table.sql",
             "classpath:database/books_categories/add-categories-to-book.sql"
@@ -61,6 +63,7 @@ class BookRepositoryTest {
     @Test
     @DisplayName("Checks findByIdWithCategories with valid data")
     @Sql(scripts = {
+            "classpath:database/categories/delete-categories-from-categories-table.sql",
             "classpath:database/categories/add-categories-to-categories-table.sql",
             "classpath:database/books/add-book-to-books-table.sql",
             "classpath:database/books_categories/add-categories-to-book.sql"
@@ -80,6 +83,7 @@ class BookRepositoryTest {
     @Test
     @DisplayName("Checks findByIdWithCategories with invalid data, exception should be returned")
     @Sql(scripts = {
+            "classpath:database/categories/delete-categories-from-categories-table.sql",
             "classpath:database/categories/add-categories-to-categories-table.sql",
             "classpath:database/books/add-book-to-books-table.sql",
             "classpath:database/books_categories/add-categories-to-book.sql"
