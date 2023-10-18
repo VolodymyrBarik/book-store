@@ -1,4 +1,4 @@
-![](C:\Users\barma\IdeaProjects\book-store\images\logo.jpg)
+# Book store <img src="C:\Users\barma\IdeaProjects\book-store\images\logo small.png"/>
 
 The project was established with the goal to help book lovers to choose and to buy books online. 
 Inspired by Amazon of the early days. Book-store service is written in Java and this means that it has unlimited
