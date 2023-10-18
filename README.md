@@ -1,4 +1,4 @@
-# Book store <img src="C:\Users\barma\IdeaProjects\book-store\images\logo small.png"/>
+# Book store <img height="50" src="C:\Users\barma\IdeaProjects\book-store\images\logo small.png"/>
 
 The project was established with the goal to help book lovers to choose and to buy books online. 
 Inspired by Amazon of the early days. Book-store service is written in Java and this means that it has unlimited
@@ -6,7 +6,8 @@ potential for further development. By now it has only basic functionality.
 The selection of books is very large, but the interface is easy to understand and not overloaded with functionality,
 so you can quickly find the book you like.
 
-# Technologies been used 
+# Technologies been used <img height="50" src="C:\Users\barma\IdeaProjects\book-store\images\spring logo.png"/> <img height="50" src="C:\Users\barma\IdeaProjects\book-store\images\java 17 logo.png"/>
+Java 17 - as main language of the project.
 Spring Boot - as main framework to build this RESTful service 
 Spring Security - user as provider of user authentication, authorization, and role-based access control 
 Spring Data JPA - as source of a high-level solutions, easy-to-use interfaces for working with databases
@@ -46,7 +47,7 @@ only for users with the role ADMIN.
 
 ![](C:\Users\barma\IdeaProjects\book-store\images\Categories_management_2.jpg)
     
-# Possible usage
+# Possible usage <img height="50" src="C:\Users\barma\IdeaProjects\book-store\images\docker logo.png"/> <img height="50" src="C:\Users\barma\IdeaProjects\book-store\images\aws-logo.png"/>
 One of the possible ways to use this book-service is to make an image of this part of the application.
 After that image can be pushed to one of the cloud services for example AWS. Database connection will be configured there.
 This will be the back-end part of the web app. Just like that there can be configured front-end parts.
